@@ -29,7 +29,7 @@ export async function saveOffline(id: string, url: string, onProgress?: (pct: nu
     received += value.length;
     if (total && onProgress) onProgress(Math.round((received / total) * 100));
   }
-  const blob = new Blob(chunks, { type: res.headers.get("Content-Type") || "audio/mpeg" });
+  const blob = new Blob(chunks as BlobPart[], { type: res.headers.get("Content-Type") || "audio/mpeg" });
   const db = await open();
   await new Promise<void>((resolve, reject) => {
     const tx = db.transaction(STORE, "readwrite");
